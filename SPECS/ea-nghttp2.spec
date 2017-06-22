@@ -1,7 +1,9 @@
 Summary: Meta-package that only requires libnghttp2
 Name: ea-nghttp2
 Version: 1.20.0
-Release: 1%{?dist}.1
+# Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
+%define release_prefix 2
+Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group: Applications/Internet
 URL: https://nghttp2.org/
@@ -40,8 +42,8 @@ for building applications with libnghttp2.
 
 
 %build
-
-export OPENSSL_CFLAGS="-I/opt/ea4/openssl/include" OPENSSL_LIBS="-L/opt/ea4/openssl/lib -lssl -lcrypto"
+# Build this against our custom ea-openssl
+export OPENSSL_CFLAGS="-I/opt/cpanel/ea-openssl/include" OPENSSL_LIBS="-L/opt/cpanel/ea-openssl/lib -lssl -lcrypto"
 
 %configure				    
 
@@ -96,3 +98,5 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Thu Jun 08 2017 Jacob Perkins <jacob.perkins@cpanel.net> - 1.20.0-2
+- Promotion from EA4 Experimental to Production
