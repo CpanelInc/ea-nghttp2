@@ -2,7 +2,7 @@ Summary: Meta-package that only requires libnghttp2
 Name: ea-nghttp2
 Version: 1.20.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
-%define release_prefix 2
+%define release_prefix 4
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group: Applications/Internet
@@ -98,5 +98,8 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Thu Sep 07 2017 Dan Muey <dan@cpanel.net> - 1.20.0-4
+- EA-6638: bump release prefix to make the EA4 one newer than the typo'd-release-prefix in EA4-experimental
+
 * Thu Jun 08 2017 Jacob Perkins <jacob.perkins@cpanel.net> - 1.20.0-2
 - Promotion from EA4 Experimental to Production
