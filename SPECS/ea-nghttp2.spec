@@ -2,7 +2,7 @@ Summary: Meta-package that only requires libnghttp2
 Name: ea-nghttp2
 Version: 1.20.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
-%define release_prefix 4
+%define release_prefix 5
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group: Applications/Internet
@@ -12,6 +12,7 @@ BuildRequires: ea-openssl-devel >= 1.0.2
 BuildRequires: zlib-devel
 
 Requires: ea-libnghttp2%{?_isa} = %{version}-%{release}
+Conflicts: libnghttp2
 
 %description
 This package installs no files.  It only requires the libnghttp2 package.
@@ -98,6 +99,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Thu Sep 28 2017 Dan Muey <dan@cpanel.net> - 1.20.0-5
+- EA-6555: add conflict for libnghttp2 since it provides the same stuff
+
 * Thu Sep 07 2017 Dan Muey <dan@cpanel.net> - 1.20.0-4
 - EA-6638: bump release prefix to make the EA4 one newer than the typo'd-release-prefix in EA4-experimental
 
