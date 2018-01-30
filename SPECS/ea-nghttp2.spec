@@ -2,7 +2,7 @@ Summary: Meta-package that only requires libnghttp2
 Name: ea-nghttp2
 Version: 1.20.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
-%define release_prefix 5
+%define release_prefix 6
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group: Applications/Internet
@@ -12,7 +12,6 @@ BuildRequires: ea-openssl-devel >= 1.0.2
 BuildRequires: zlib-devel
 
 Requires: ea-libnghttp2%{?_isa} = %{version}-%{release}
-Conflicts: libnghttp2
 
 %description
 This package installs no files.  It only requires the libnghttp2 package.
@@ -99,6 +98,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Tue Jan 30 2018 Dan Muey <dan@cpanel.net> - 1.20.0-6
+- EA-7197: remove conflict for libnghttp2 until we can resolve the issus it cause w/ PHP curl
+
 * Thu Sep 28 2017 Dan Muey <dan@cpanel.net> - 1.20.0-5
 - EA-6555: add conflict for libnghttp2 since it provides the same stuff
 
