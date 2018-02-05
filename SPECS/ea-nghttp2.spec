@@ -1,8 +1,10 @@
+%define prefix_dir /opt/cpanel/nghttp2
+
 Summary: Meta-package that only requires libnghttp2
 Name: ea-nghttp2
 Version: 1.20.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
-%define release_prefix 6
+%define release_prefix 7
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group: Applications/Internet
@@ -45,7 +47,9 @@ for building applications with libnghttp2.
 # Build this against our custom ea-openssl
 export OPENSSL_CFLAGS="-I/opt/cpanel/ea-openssl/include" OPENSSL_LIBS="-L/opt/cpanel/ea-openssl/lib -lssl -lcrypto"
 
-%configure				    
+mkdir -p $RPM_BUILD_ROOT%{prefix_dir}
+./configure --prefix=%{prefix_dir}
+
 
 # avoid using rpath
 sed -i libtool                              \
@@ -83,21 +87,18 @@ make %{?_smp_mflags} check
 %files
 
 %files -n ea-libnghttp2
-%{!?_licensedir:%global license %%doc}
-%license COPYING
-%attr(755,root,root) %{_libdir}/libnghttp2.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libnghttp2.so.14
-
+%{prefix_dir}
 
 
 %files -n ea-libnghttp2-devel
-%{_includedir}/nghttp2
-%{_libdir}/pkgconfig/libnghttp2.pc
-%{_libdir}/libnghttp2.so
+%{prefix_dir}/include/nghttp2
+%{prefix_dir}/lib/pkgconfig
 %doc README.rst
 
-
 %changelog
+* Tue Jan 30 2018 Dan Muey <dan@cpanel.net> - 1.20.0-7
+- ZC-3365: move to /opt
+
 * Tue Jan 30 2018 Dan Muey <dan@cpanel.net> - 1.20.0-6
 - EA-7197: remove conflict for libnghttp2 until we can resolve the issus it cause w/ PHP curl
 
