@@ -1,16 +1,17 @@
 %define prefix_dir /opt/cpanel/nghttp2
+%define ea_openssl_ver 1.0.2n-3
 
 Summary: Meta-package that only requires libnghttp2
 Name: ea-nghttp2
 Version: 1.20.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
-%define release_prefix 7
+%define release_prefix 8
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group: Applications/Internet
 URL: https://nghttp2.org/
 Source0: https://github.com/tatsuhiro-t/nghttp2/releases/download/v%{version}/nghttp2-%{version}.tar.xz
-BuildRequires: ea-openssl-devel >= 1.0.2
+BuildRequires: ea-openssl-devel >= %{ea_openssl_ver}
 BuildRequires: zlib-devel
 
 Requires: ea-libnghttp2%{?_isa} = %{version}-%{release}
@@ -96,6 +97,9 @@ make %{?_smp_mflags} check
 %doc README.rst
 
 %changelog
+* Mon Mar 20 2018 Cory McIntire <cory@cpanel.net> - 1.20.0-8
+- ZC-3552: Added versioning to ea-openssl requirements.
+
 * Tue Jan 30 2018 Dan Muey <dan@cpanel.net> - 1.20.0-7
 - ZC-3365: move to /opt
 
