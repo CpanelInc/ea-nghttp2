@@ -1,0 +1,47 @@
+#!/usr/local/cpanel/3rdparty/bin/perl
+# cpanel - find-latest-version                  Copyright(c) 2019 cPanel, L.L.C.
+#                                                           All rights Reserved.
+# copyright@cpanel.net                                         http://cpanel.net
+# This code is subject to the cPanel license. Unauthorized copying is prohibited
+#
+# This provides incremental updates to existing packages in EasyApache4.
+package ea_nghttp2::find_latest_version;
+
+use strict;
+use warnings;
+
+use lib "../ea-tools/lib/ea4_tool";    # assumes ea-tools is checked out next to this repo
+use ea4_tool::util ();
+
+unless ( caller() ) {
+    ea4_tool::util::find_latest_version( \&_get_required, \&_add_sum );
+}
+
+###############
+#### helpers ##
+###############
+
+sub _get_required {
+    my ($http) = @_;
+
+    my $res = $http->get("https://github.com/nghttp2/nghttp2/releases");
+    if ( !$res->{success} ) {
+        die "Could not GET nghttp2 dist page ($res->{status} $res->{reason})\n";
+    }
+    my @nghttp2 = sort { $b <=> $a } ( $res->{content} =~ m{href="/nghttp2/nghttp2/releases/download/v1\.([0-9]+\.[0-9]+)/nghttp2-1\.([0-9]+\.[0-9]+)\.tar\.xz"}g );
+    if ( !@nghttp2 ) {
+        die "Could not find nghttp2 versions\n";
+    }
+
+    my $version = "1\.$nghttp2[0]";
+    my $name    = "nghttp2-$version.tar.xz";
+    my $url     = "https://github.com/nghttp2/nghttp2/releases/download/v1.38.0/$name";
+
+    return ( $version, $url, $name );
+}
+
+sub _add_sum {
+    my ( $http, $hr ) = @_;
+
+    return;
+}
