@@ -35,7 +35,7 @@ sub _get_required {
 
     my $version = "1\.$nghttp2[0]";
     my $name    = "nghttp2-$version.tar.xz";
-    my $url     = "https://github.com/nghttp2/nghttp2/releases/download/v1.38.0/$name";
+    my $url     = "https://github.com/nghttp2/nghttp2/releases/download/v$version/$name";
 
     return ( $version, $url, $name );
 }
