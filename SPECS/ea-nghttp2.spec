@@ -11,7 +11,7 @@ License: MIT
 Group: Applications/Internet
 URL: https://nghttp2.org/
 Source0: https://github.com/tatsuhiro-t/nghttp2/releases/download/v%{version}/nghttp2-%{version}.tar.xz
-BuildRequires: ea-openssl-devel >= %{ea_openssl_ver}
+BuildRequires: ea-openssl11-devel >= %{ea_openssl_ver}
 BuildRequires: zlib-devel
 
 Requires: ea-libnghttp2%{?_isa} = %{version}-%{release}
@@ -45,8 +45,8 @@ for building applications with libnghttp2.
 
 
 %build
-# Build this against our custom ea-openssl
-export OPENSSL_CFLAGS="-I/opt/cpanel/ea-openssl/include" OPENSSL_LIBS="-L/opt/cpanel/ea-openssl/lib -lssl -lcrypto"
+# Build this against our custom ea-openssl11
+export OPENSSL_CFLAGS="-I/opt/cpanel/ea-openssl11/include" OPENSSL_LIBS="-L/opt/cpanel/ea-openssl11/lib -lssl -lcrypto"
 
 mkdir -p $RPM_BUILD_ROOT%{prefix_dir}
 ./configure --prefix=%{prefix_dir}
