@@ -1,17 +1,17 @@
 %define prefix_dir /opt/cpanel/nghttp2
-%define ea_openssl_ver 1.0.2n-3
+%define ea_openssl_ver 1.1.1d-1
 
 Summary: Meta-package that only requires libnghttp2
 Name: ea-nghttp2
 Version: 1.40.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group: Applications/Internet
 URL: https://nghttp2.org/
 Source0: https://github.com/tatsuhiro-t/nghttp2/releases/download/v%{version}/nghttp2-%{version}.tar.xz
-BuildRequires: ea-openssl-devel >= %{ea_openssl_ver}
+BuildRequires: ea-openssl11-devel >= %{ea_openssl_ver}
 BuildRequires: zlib-devel
 
 Requires: ea-libnghttp2%{?_isa} = %{version}-%{release}
@@ -45,8 +45,8 @@ for building applications with libnghttp2.
 
 
 %build
-# Build this against our custom ea-openssl
-export OPENSSL_CFLAGS="-I/opt/cpanel/ea-openssl/include" OPENSSL_LIBS="-L/opt/cpanel/ea-openssl/lib -lssl -lcrypto"
+# Build this against our custom ea-openssl11
+export OPENSSL_CFLAGS="-I/opt/cpanel/ea-openssl11/include" OPENSSL_LIBS="-L/opt/cpanel/ea-openssl11/lib -lssl -lcrypto"
 
 mkdir -p $RPM_BUILD_ROOT%{prefix_dir}
 ./configure --prefix=%{prefix_dir}
@@ -97,6 +97,9 @@ make %{?_smp_mflags} check
 %doc README.rst
 
 %changelog
+* Wed Dec 18 2019 Daniel Muey <dan@cpanel.net> - 1.40.0-2
+- ZC-4361: Update ea-openssl requirement to v1.1.1 (ZC-5583)
+
 * Mon Nov 18 2019 Cory McIntire <cory@cpanel.net> - 1.40.0-1
 - EA-8749: Update ea-nghttp2 from v1.39.2 to v1.40.0
 
