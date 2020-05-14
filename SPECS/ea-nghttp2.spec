@@ -11,10 +11,20 @@ License: MIT
 Group: Applications/Internet
 URL: https://nghttp2.org/
 Source0: https://github.com/tatsuhiro-t/nghttp2/releases/download/v%{version}/nghttp2-%{version}.tar.xz
+Patch1: 0001-Select-Python3-for-CentOS-8.patch
+
 BuildRequires: ea-openssl11-devel >= %{ea_openssl_ver}
 BuildRequires: zlib-devel
 
 Requires: ea-libnghttp2%{?_isa} = %{version}-%{release}
+
+%if 0%{?rhel} > 7
+BuildRequires: python36
+Requires: python36
+
+BuildRequires: libnghttp2
+Requires: libnghttp2
+%endif
 
 %description
 This package installs no files.  It only requires the libnghttp2 package.
@@ -43,6 +53,9 @@ for building applications with libnghttp2.
 %prep
 %setup -q -n nghttp2-%{version}
 
+%if 0%{?rhel} > 7
+%patch1 -p1 -b .python3
+%endif
 
 %build
 # Build this against our custom ea-openssl11
