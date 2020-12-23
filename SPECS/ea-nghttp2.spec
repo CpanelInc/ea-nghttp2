@@ -5,7 +5,7 @@ Summary: Meta-package that only requires libnghttp2
 Name: ea-nghttp2
 Version: 1.42.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group: Applications/Internet
@@ -13,17 +13,21 @@ URL: https://nghttp2.org/
 Source0: https://github.com/tatsuhiro-t/nghttp2/releases/download/v%{version}/nghttp2-%{version}.tar.xz
 Patch1: 0001-Select-Python3-for-CentOS-8.patch
 
-BuildRequires: ea-openssl11-devel >= %{ea_openssl_ver}
+%if 0%{?rhel} > 7
+# In C8 we use system openssl. See DESIGN.md in ea-openssl11 git repo for details
+BuildRequires: openssl-devel
 BuildRequires: zlib-devel
 
 Requires: ea-libnghttp2%{?_isa} = %{version}-%{release}
+Requires: openssl
 
-%if 0%{?rhel} > 7
 BuildRequires: python36
 Requires: python36
 
 BuildRequires: libnghttp2
-Requires: libnghttp2
+%else
+BuildRequires: ea-openssl11-devel >= %{ea_openssl_ver}
+Requires: ea-openssl11
 %endif
 
 %description
@@ -58,8 +62,10 @@ for building applications with libnghttp2.
 %endif
 
 %build
+%if 0%{?rhel} < 8
 # Build this against our custom ea-openssl11
 export OPENSSL_CFLAGS="-I/opt/cpanel/ea-openssl11/include" OPENSSL_LIBS="-L/opt/cpanel/ea-openssl11/lib -lssl -lcrypto"
+%endif
 
 mkdir -p $RPM_BUILD_ROOT%{prefix_dir}
 ./configure --prefix=%{prefix_dir}
@@ -110,6 +116,9 @@ make %{?_smp_mflags} check
 %doc README.rst
 
 %changelog
+* Tue Dec 01 2020 Julian Brown <julian.brown@cpanel.net> - 1.42.0-2
+- ZC-8005: Replace ea-openssl11 with system openssl on C8
+
 * Sun Nov 29 2020 Cory McIntire <cory@cpanel.net> - 1.42.0-1
 - EA-9445: Update ea-nghttp2 from v1.41.0 to v1.42.0
 
