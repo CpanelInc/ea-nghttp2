@@ -3,9 +3,9 @@
 
 Summary: Meta-package that only requires libnghttp2
 Name: ea-nghttp2
-Version: 1.42.0
+Version: 1.43.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
-%define release_prefix 2
+%define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group: Applications/Internet
@@ -68,7 +68,7 @@ export OPENSSL_CFLAGS="-I/opt/cpanel/ea-openssl11/include" OPENSSL_LIBS="-L/opt/
 %endif
 
 mkdir -p $RPM_BUILD_ROOT%{prefix_dir}
-./configure --prefix=%{prefix_dir}
+./configure --prefix=%{prefix_dir} --disable-python-bindings
 
 
 # avoid using rpath
@@ -116,6 +116,9 @@ make %{?_smp_mflags} check
 %doc README.rst
 
 %changelog
+* Thu Feb 04 2021 Tim Mullin <tim@cpanel.net> - 1.43.0-1
+- EA-9573: Update ea-nghttp2 from v1.42.0 to v1.43.0
+
 * Tue Dec 01 2020 Julian Brown <julian.brown@cpanel.net> - 1.42.0-2
 - ZC-8005: Replace ea-openssl11 with system openssl on C8
 
