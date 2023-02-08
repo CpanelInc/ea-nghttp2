@@ -5,7 +5,7 @@ Summary: Meta-package that only requires libnghttp2
 Name: ea-nghttp2
 Version: 1.51.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group: Applications/Internet
@@ -18,7 +18,6 @@ Patch1: 0001-Select-Python3-for-CentOS-8.patch
 BuildRequires: openssl-devel
 BuildRequires: zlib-devel
 
-Requires: ea-libnghttp2%{?_isa} = %{version}-%{release}
 Requires: openssl
 
     %if 0%{?rhel} == 8
@@ -36,6 +35,8 @@ BuildRequires: libnghttp2
 BuildRequires: ea-openssl11-devel >= %{ea_openssl_ver}
 Requires: ea-openssl11
 %endif
+
+Requires: ea-libnghttp2%{?_isa} = %{version}-%{release}
 
 %description
 This package installs no files.  It only requires the libnghttp2 package.
@@ -123,6 +124,9 @@ make %{?_smp_mflags} check
 %doc README.rst
 
 %changelog
+* Wed Feb 08 2023 Travis Holloway <t.holloway@cpanel.net> - 1.51.0-2
+- EA-11221: Have ea-nghttp2 require ea-libnghttp2
+
 * Fri Feb 03 2023 Cory McIntire <cory@cpanel.net> - 1.51.0-1
 - EA-11210: Update ea-nghttp2 from v1.49.0 to v1.51.0
 
