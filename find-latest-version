@@ -28,7 +28,7 @@ sub _get_required {
     if ( !$res->{success} ) {
         die "Could not GET nghttp2 dist page ($res->{status} $res->{reason})\n";
     }
-    my @nghttp2 = sort { $b <=> $a } ( $res->{content} =~ m{href="/nghttp2/nghttp2/releases/download/v1\.([0-9]+\.[0-9]+)/nghttp2-1\.([0-9]+\.[0-9]+)\.tar\.xz"}g );
+    my @nghttp2 = sort { $b <=> $a } ( $res->{content} =~ m{href="/nghttp2/nghttp2/releases/tag/v1\.([0-9]+\.[0-9]+)"}g );
     if ( !@nghttp2 ) {
         die "Could not find nghttp2 versions\n";
     }
