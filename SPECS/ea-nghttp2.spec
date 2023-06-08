@@ -3,7 +3,7 @@
 
 Summary: Meta-package that only requires libnghttp2
 Name: ea-nghttp2
-Version: 1.53.0
+Version: 1.54.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
@@ -124,6 +124,9 @@ make %{?_smp_mflags} check
 %doc README.rst
 
 %changelog
+* Thu Jun 08 2023 Cory McIntire <cory@cpanel.net> - 1.54.0-1
+- EA-11474: Update ea-nghttp2 from v1.53.0 to v1.54.0
+
 * Wed May 10 2023 Cory McIntire <cory@cpanel.net> - 1.53.0-1
 - EA-11412: Update ea-nghttp2 from v1.52.0 to v1.53.0
 
