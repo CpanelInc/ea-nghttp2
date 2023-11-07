@@ -3,7 +3,7 @@
 
 Summary: Meta-package that only requires libnghttp2
 Name: ea-nghttp2
-Version: 1.57.0
+Version: 1.58.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
@@ -124,6 +124,9 @@ make %{?_smp_mflags} check
 %doc README.rst
 
 %changelog
+* Mon Oct 30 2023 Cory McIntire <cory@cpanel.net> - 1.58.0-1
+- EA-11777: Update ea-nghttp2 from v1.57.0 to v1.58.0
+
 * Tue Oct 10 2023 Cory McIntire <cory@cpanel.net> - 1.57.0-1
 - EA-11729: Update ea-nghttp2 from v1.56.0 to v1.57.0
 - CVE-2023-44487 - The HTTP/2 protocol allows a denial of service (server resource consumption)
