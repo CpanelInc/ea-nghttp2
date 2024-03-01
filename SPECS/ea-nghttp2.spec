@@ -65,7 +65,7 @@ for building applications with libnghttp2.
 %prep
 %setup -q -n nghttp2-%{version}
 
-%if 0%{?rhel} > 7
+%if 0%{?rhel} < 8
 %patch1 -p1 -b .python3
 %endif
 
