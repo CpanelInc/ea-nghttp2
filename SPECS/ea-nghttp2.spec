@@ -126,6 +126,7 @@ make %{?_smp_mflags} check
 %changelog
 * Thu Apr 04 2024 Cory McIntire <cory@cpanel.net> - 1.61.0-1
 - EA-12069: Update ea-nghttp2 from v1.60.0 to v1.61.0
+- CVE-2024-28182: Reading unbounded number of HTTP/2 CONTINUATION frames to cause excessive CPU usage
 
 * Fri Mar 01 2024 Cory McIntire <cory@cpanel.net> - 1.60.0-1
 - EA-11992: Update ea-nghttp2 from v1.59.0 to v1.60.0
