@@ -3,7 +3,7 @@
 
 Summary: Meta-package that only requires libnghttp2
 Name: ea-nghttp2
-Version: 1.65.0
+Version: 1.66.0
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
@@ -11,7 +11,8 @@ License: MIT
 Group: Applications/Internet
 URL: https://nghttp2.org/
 Source0: https://github.com/tatsuhiro-t/nghttp2/releases/download/v%{version}/nghttp2-%{version}.tar.xz
-Patch1: 0001-Select-Python3-for-CentOS-8.patch
+# OCSP is being deprecated by Lets Encrypt. leaving patch but removing its application, for now
+# Patch1: 0001-Select-Python3-for-CentOS-8.patch
 
 %if 0%{?rhel} > 7
 # In C8 we use system openssl. See DESIGN.md in ea-openssl11 git repo for details
@@ -65,9 +66,10 @@ for building applications with libnghttp2.
 %prep
 %setup -q -n nghttp2-%{version}
 
-%if 0%{?rhel} < 8
-%patch1 -p1 -b .python3
-%endif
+# See patch above for more details
+# %if 0%{?rhel} < 8
+# %patch1 -p1 -b .python3
+#%endif
 
 %build
 %if 0%{?rhel} < 8
@@ -124,6 +126,9 @@ make %{?_smp_mflags} check
 %doc README.rst
 
 %changelog
+* Mon Jun 23 2025 Cory McIntire <cory.mcintire@webpros.com> - 1.66.0-1
+- EA-12941: Update ea-nghttp2 from v1.65.0 to v1.66.0
+
 * Mon Mar 03 2025 Cory McIntire <cory.mcintire@webpros.com> - 1.65.0-1
 - EA-12743: Update ea-nghttp2 from v1.64.0 to v1.65.0
 
