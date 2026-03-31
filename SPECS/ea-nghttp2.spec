@@ -5,7 +5,7 @@ Summary: Meta-package that only requires libnghttp2
 Name: ea-nghttp2
 Version: 1.68.1
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: MIT
 Group: Applications/Internet
@@ -119,6 +119,10 @@ make %{?_smp_mflags} check
 %doc README.rst
 
 %changelog
+* Tue Apr 01 2026 Cory McIntire <cory.mcintire@webpros.com> - 1.68.1-2
+- EA-13378: Add CVE documentation for nghttp2 1.68.1
+- CVE-2026-27135: Denial of service via assertion failure due to missing state validation (CVSS 7.5)
+
 * Tue Mar 24 2026 Cory McIntire <cory.mcintire@webpros.com> - 1.68.1-1
 - EA-13378: Update ea-nghttp2 from v1.68.0 to v1.68.1
 
