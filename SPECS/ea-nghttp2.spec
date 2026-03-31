@@ -119,7 +119,7 @@ make %{?_smp_mflags} check
 %doc README.rst
 
 %changelog
-* Tue Apr 01 2026 Cory McIntire <cory.mcintire@webpros.com> - 1.68.1-2
+* Wed Apr 01 2026 Cory McIntire <cory.mcintire@webpros.com> - 1.68.1-2
 - EA-13378: Add CVE documentation for nghttp2 1.68.1
 - CVE-2026-27135: Denial of service via assertion failure due to missing state validation (CVSS 7.5)
 
